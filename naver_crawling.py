@@ -1,0 +1,36 @@
+# To add a new cell, type '# %%'
+# To add a new markdown cell, type '# %% [markdown]'
+# %%
+from bs4 import BeautifulSoup
+
+# %%
+import urllib.request
+import urllib.parse
+
+
+# %%
+web_url = "https://learn.dict.naver.com/m/jpdic/today/conversation.nhn?targetDate=2021.02.08"
+
+with urllib.request.urlopen(web_url) as response:
+    html = response.read()
+    soup = BeautifulSoup(html, 'html.parser')
+
+
+# %%
+string = ""
+ul_tag = soup.find("ul", class_ ="todayConversation conv_lst _tip_area").find_all("li")
+for a_tag in ul_tag:
+      string = string + (a_tag.get('data-ttsurl') + "<br>") 
+        
+print(string)
+
+
+# %%
+string = string + ""
+ul_tag = soup.find("ul", class_ ="conv_lst conv_lst_v2").find_all("li")
+for a_tag in ul_tag:
+      string = string + (a_tag.getText(strip=True) + "<br>")
+        
+print(string)
+
+
